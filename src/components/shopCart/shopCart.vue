@@ -192,52 +192,6 @@ export default {
 
 
         // 购物车小球动画
-        //     drop(el) {
-        //         // 遍历balls
-        //         for(let i=0;i<this.balls.length;i++) {
-        //             let ball = this.balls[i];
-        //             if(!ball.show) {
-        //                 ball.show = true;
-        //                 ball.el = el;
-        //                 this.dropBall.push(ball);
-        //                 return;
-        //             }
-        //         }
-        //     },
-        //     beforeEnter(el) {   //找到所以设为true的小球
-        //         let count = this.balls.length;
-        //         while (count--) {
-        //             let ball = this.balls[count];
-        //             if (ball.show) {
-        //                 let rect = ball.el.getBoundingClientRect();//返回元素相对于视口偏移的位置
-        //                 let x = rect.left - 32;  //点击的按钮与小球（fixed）之间x方向的差值
-        //                 let y = -(window.innerHeight - rect.top - 22);
-        //                 el.style.display = '';    //设置初始位置前，手动置空，覆盖之前的display：none，使其显示
-        //                 el.style.webkitTransform = `translate3d(0,${y}px,0)`;  //外层元素做纵向的动画，y是变量
-        //                 el.style.transform = `translate3d(0,${y}px,0)`;
-        //                 let inner = el.getElementsByClassName('inner-hook')[0];//内层元素做横向动画,inner-hook（用于js选择的样式名加上-hook，表明只是用                                                                      //于js选择的，没有真实的样式含义）
-        //                 inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
-        //                 inner.style.transform = `translate3d(${x}px,0,0)`;
-        //             }
-        //         }
-        //   },
-        //   enter(el) {  
-        //     //let rf = el.offestHeight;
-        //     this.$nextTick(() => {//异步执行
-        //         el.style.webkitTransform = 'translate3d(0,0,0)';    //重置回来
-        //         el.style.transform = 'translate3d(0,0,0)';
-        //         let inner = el.getElementsByClassName('inner-hook')[0];
-        //         inner.style.webkitTransform = 'translate3d(0,0,0)';
-        //         inner.style.transform = 'translate3d(0,0,0)';
-        //     });
-        //   },
-        //   afterEnter(el) {
-        //     let ball = this.dropBalls.shift();  //取到做完动画的球，再置为false，即重置，它还可以接着被利用
-        //     if (ball) {
-        //       ball.show = false;
-        //       el.style.display = 'none';
-        //     }
-        //   }
     },
     components: {
         cartcontrol//注册组件
@@ -346,17 +300,7 @@ export default {
                         color: #fff;
                     }
                 }
-            }
-            .list-enter-active, .list-leave-active {
-                transition: all 1s;
-                transform: translate3d(0, 100%, 0);
-            }        
-            .list-enter, .list-leave-to {
-                opacity: 0;
-                
-                
-                
-            }       
+            }     
             .shopcart-list {
                 position: absolute;
                 left: 0;
@@ -365,6 +309,14 @@ export default {
                 width: 100%;
                 transform: translate3d(0, -100%, 0);
                 background: #fff;
+                &.list-enter-active,&.list-leave-active {
+                    transition: all 1s;
+                    opacity: 1;
+                }
+                &.list-enter,&.list-leave-to {
+                    transform: translate3d(0,0,0);
+                    opacity: 0;
+                }
                 .list-header {
                     height: 40px;
                     line-height: 40px;
@@ -414,15 +366,6 @@ export default {
                     }
                 }
             } 
-           .mask-enter,.mask-leave-to {
-               opacity: 0;
-               background: rgba(7,17,27,0.6);
-           }
-           .mask-enter-active,.mask-leave-active {
-               opacity: 1;
-               transition: 0.5s all;
-               background: rgba(7,17,27,0);
-           }
             .list-mask {
                 position: fixed;
                 top: 0;
@@ -431,6 +374,14 @@ export default {
                 height: 100%;
                 z-index: 1;
                 backdrop-filter: blur(10px);
+                background: rgba(7,17,27,0.6);
+                &.mask-enter-active, &.mask-leave-active {
+                    transition: all 0.5s;
+                }    
+                &.mask-enter, &.mask-leave-to {
+                    background: rgba(7, 17, 27, 0);
+                }
+                    
             }
         }
     }

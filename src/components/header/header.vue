@@ -331,7 +331,7 @@ export default {
                             }
                             .text {
                                 line-height: 16px;
-                                font-size: 18px;
+                                font-size: 15px;
                             }
                         }
                     }
@@ -341,7 +341,7 @@ export default {
                         .content {
                             padding: 0 12px;
                             line-height: 24px;
-                            font-size: 12px;
+                            font-size: 14px;
                             font-family: "微软雅黑";
                             color: #ffffff;
                         }

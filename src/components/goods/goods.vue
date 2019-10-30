@@ -3,7 +3,7 @@
     <!-- 左侧菜单 -->
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item,index) in goods" :key="item.id" class="menu-item" @click="selectMenu(index,$event)" :class="{'active':currentIndex === index}">
+        <li :class="{'current':currentIndex===index}" v-for="(item,index) in goods" :key="item.id" class="menu-item" @click="selectMenu(index,$event)" >
           <span class="text">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>
             {{ item.name }}
@@ -157,7 +157,7 @@ export default {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
-      this.activeClass = index;
+      // this.activeClass = index;
     },
 
     selectFood(food,event){
@@ -189,12 +189,20 @@ export default {
     flex: 0 0 80px; //第一个：等分，第二个：内容不足时的缩放情况，第三个：占位空间
     width: 80px;
     background: #f3f5f7;
+    &.current {
+      position: relative;
+      z-index: 100;
+      // margin-top: -1px;
+      background: #ffffff;
+      font-weight: 700;
+    }
     .menu-item {
       display: table; //垂直居中
       height: 54px;
       line-height: 14px;
       width: 56px;
       padding: 0 12px;
+     
       .icon {
         display: inline-block;
         vertical-align: top;
@@ -226,14 +234,7 @@ export default {
         border-bottom: 1px solid rgba(7, 17, 27, 0.1);
         font-size: 12px;
       }
-    .active {
-        // position: relative;
-        // margin-top: -1px;
-        // z-index: 10;
-        background: #fff;
-        color: red;
-        font-weight: 700;
-      }  
+    
       
     }
   }

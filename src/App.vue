@@ -54,7 +54,6 @@ export default {
   width: 100%;
   height: 40px;
   line-height: 40px;
-  border-bottom: 2px solid rgba(7, 17, 27, 0.1);
   .tab-item {
     flex: 1;
     text-align: center;
@@ -65,20 +64,16 @@ export default {
     }
     .nav-active {
       color: #f01414;
+      font-weight: 700;
     }
   }
 }
-.v-enter {//右进
-	  opacity: 0;
-	  transform: translateX(100%);
-  }
-  .v-leave-to {//左进
-	  opacity: 0;
-	  transform: translateX(-100%);
-	  position: absolute;//不跳
-  }
-  .v-enter-active,.v-leave-active {
-	  transition: .6s all ease;
-  }
+.v-enter,.v-leave-to {
+	opacity: 0;
+	transform: translateX(100%);
+}
+.v-enter-active,.v-leave-active {
+	transition: .6s all ease;
+}
 </style>
 

@@ -3,7 +3,7 @@
     <!-- 左侧菜单 -->
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li :class="{'current':currentIndex===index}" v-for="(item,index) in goods" :key="item.id" class="menu-item" @click="selectMenu(index,$event)" >
+        <li v-for="(item,index) in goods" :key="item.id" class="menu-item" @click="toggle(index);selectMenu(index,$event)" :class="{'active':index==checkindex}">
           <span class="text">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>
             {{ item.name }}
@@ -67,7 +67,8 @@ export default {
       goods: [],
       listHeight:[],
       scrollY:0,
-      selectedFood:{}
+      selectedFood:{},
+      checkindex:0
     };
   },
   created() {
@@ -110,13 +111,10 @@ export default {
     }
   },
   methods: {
-    //小球飞入
-//     incrementTotal(target) {
-// 　　　　this.$nextTick(()=>{
-// 　　　　　　this.$refs.shopCart.drop(target);
-//       });
-    // },
-
+    //切换高亮
+    toggle(index) {
+      this.checkindex = index;
+    },
     //左右菜单滚动效果
     initScroll() {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
@@ -131,9 +129,7 @@ export default {
       this.foodsScroll.on('scroll',(pos) =>{
         this.scrollY = Math.abs(Math.round(pos.y));
         // console.log(scrollY);
-      });
-
-      
+      });      
     },
 
     //计算高度
@@ -149,7 +145,7 @@ export default {
       }
     },
     //点左边菜单选择右侧对应食物
-    selectMenu(index,event) {
+    selectMenu(index,event,highLight) {
       if(!event._constructed) {
         return;
       }
@@ -157,7 +153,7 @@ export default {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
       let el = foodList[index];
       this.foodsScroll.scrollToElement(el, 300);
-      // this.activeClass = index;
+      this.current = highLight;
     },
 
     selectFood(food,event){
@@ -178,7 +174,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.goods {
+.active {
+  background: #ffffff;
+  border-left: 4px solid red;
+  font-weight: bolder;
+}
+.goods {  
   display: flex;
   position: absolute;
   top: 174px;
@@ -189,20 +190,12 @@ export default {
     flex: 0 0 80px; //第一个：等分，第二个：内容不足时的缩放情况，第三个：占位空间
     width: 80px;
     background: #f3f5f7;
-    &.current {
-      position: relative;
-      z-index: 100;
-      // margin-top: -1px;
-      background: #ffffff;
-      font-weight: 700;
-    }
     .menu-item {
       display: table; //垂直居中
       height: 54px;
       line-height: 14px;
       width: 56px;
-      padding: 0 12px;
-     
+      padding: 0 12px;     
       .icon {
         display: inline-block;
         vertical-align: top;
@@ -229,13 +222,9 @@ export default {
       }
       .text {
         display: table-cell;
-        width: 56px;
         vertical-align: middle;
-        border-bottom: 1px solid rgba(7, 17, 27, 0.1);
-        font-size: 12px;
-      }
-    
-      
+        font-size: 14px;
+      }     
     }
   }
   .food-wrapper {

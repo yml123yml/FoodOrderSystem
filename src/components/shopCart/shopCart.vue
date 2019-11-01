@@ -13,21 +13,12 @@
                 <div class="desc">另需配送费￥{{ deliveryPrice }}元</div>
             </div>
             <!-- 购物车右 -->
+            <!-- payDesc()控制显示内容，payClass()添加类调整显示样式 -->
             <div class="content-right" @click.stop.prevent="pay">
                 <div class="pay" :class="payClass">
                     {{payDesc}}
                 </div>  
             </div>
-            <!-- 小球进入的时候 -->
-            <!-- <div class="ball-container">
-                <div v-for="b in balls" :key="b.id">
-                <transition name="drop" @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
-                    <div v-show="b.show" class="ball">
-                        <div class="inner inner-hook"></div>
-                    </div>
-                </transition>
-                </div>
-            </div> -->
             <!-- 购物车详情页 -->
             <transition name="list">
                 <div class="shopcart-list" v-show="listShow" @click="hideList">
@@ -88,6 +79,7 @@ export default {
         }
     },
     props: {
+        //选择了多少商品：定义成数组，底栏其余部分的变化都基于这个对象的变化而变化
         selectFoods: {
             type: Array,
             default() {
@@ -104,15 +96,16 @@ export default {
         }
     },
     computed: {
+        //计算总价，超过起送额度后提示可付款
         totalPrice() {
             let total = 0;
             this.selectFoods.forEach((food) => {
-            total += food.price * food.count;
-        });
-        return total;
+                total += food.price * food.count;
+            });
+            return total;
         },
+        //计算选中的food数量，在购物车图标处显示，采用绝对定位，top：0；right：0；显示在购物车图标右上角
         totalCount() {
-            //计算选中的food数量，在购物车图标处显示，采用绝对定位，top：0；right：0；显示在购物车图标右上角
             let count = 0;
             this.selectFoods.forEach((food) => {
                 count += food.count;

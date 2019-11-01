@@ -27,13 +27,12 @@ export default {
                 return;
             }
             if (!this.food.count) {
+                //使用set接口，通过vue.set()添加属性，当它变化时就能被检测到，从而父组件能获取到count值（遍历选中的商品时使用）
                 Vue.set(this.food, 'count', 1);
             } 
             else {
                 this.food.count++;
             }
-            // 购物车小球动画
-            // this.$emit('increment', event.target);
         },
         decreaseCart(event) {
             if (!event._constructed) {

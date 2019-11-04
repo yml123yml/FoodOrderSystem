@@ -22,6 +22,12 @@ import router from '../router.js'
 // import './lib/mui/css/mui.min.css';
 import '../static/css/iconfont.css';
 
+//导入日期时间格式化插件
+import moment from 'moment';
+//定义过滤器
+Vue.filter('date-format',function(value,formatStr='YYYY-MM-DD HH:mm:ss'){
+    return moment(value).format(formatStr)
+});
 
 
 // 创建vue实例
